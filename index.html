@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Searching tool</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+</head>
+
+<body>
+
+    <header class="container-fluid" style="text-align:center;border-bottom: solid 2px" >
+        <div class="row">
+            <div class="col-md-12 ">
+                <h1>Searching tool</h1>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="row container-fluid" style="border-bottom: solid 2px">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4" style="border-right: solid 1px" >
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h2>Your search:</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h3>Country:</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-xs-12">
+                            <select id="country ">
+                                <option value="all " selected>All</option>
+                                <option value="at">Austria</option>
+                                <option value="be ">Belgium</option>
+                                <option value="fr ">France</option>
+                                <option value="de ">Germany</option>
+                                <option value="gr ">Greece</option>
+                                <option value="it ">Italy</option>
+                                <option value="es ">Spain</option>
+                                <option value="pt ">Portugal</option>
+                                <option value="uk ">United Kingdom</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-xs-12">
+                            <h3>City</h3>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-xs-12">
+                            <input id="autocomplete" placeholder="Enter a city " type="text " />
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-xs-12">
+                            <form action=" ">
+                                <input type="radio" name="radio" value="good" id="radio-good"> <span>Good</span><br>
+                                <input type="radio" name="radio" value="ok " id="radio-ok"> <span>Ok</span><br>
+                                <input type="radio" name="radio" value="bad " id="radio-bad"> <span>Bad</span>
+                        </form>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12">
+                        <button id="reset-button " type="button " class="btn btn-primary " onclick="reset() ">Reset</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-8">
+                <div class="row ">
+                     <div class="col-xs-12 ">
+                         <h2 class="section-heading ">Map</h2>
+                     </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12 ">
+                         <div id="map" style="min-height: 360px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="container-fluid results-container ">
+        <div class="row ">
+            <div class="col-xs-12 ">
+                <h3 id="results-heading " class="section-heading "> </h3>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-xs-12 ">
+                <div id="listing ">
+                    <table id="results-table ">
+                        <tbody id="results "></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div style="display: none ">
+            <div id="info-content ">
+                <table>
+                    <tr id="info-url-row " class="info_table_row ">
+                        <td id="info-icon " class="info_table_icon "></td>
+                        <td id="info-url "></td>
+                    </tr>
+                    <tr id="info-address-row " class="info_table_row ">
+                        <td class="info_attribute_name ">Address:</td>
+                        <td id="info-address "></td>
+                    </tr>
+                    <tr id="info-phone-row " class="info_table_row ">
+                        <td class="info_attribute_name ">Telephone:</td>
+                        <td id="info-phone "></td>
+                    </tr>
+                    <tr id="info-rating-row " class="info_table_row ">
+                        <td class="info_attribute_name">Rating:</td>
+                        <td id="info-rating "></td>
+                    </tr>
+                    <tr id="info-website-row " class="info_table_row ">
+                        <td class="info_attribute_name ">Website:</td>
+                        <td id="info-website "></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="container-fluid ">
+        <div class="row">
+            <div class="col-md-3 ">Done by</div>
+            <div class="col-mad-3 ">STEFANO</div>
+        </div>
+    </footer>
+<!-- Scripts -->
+
+</body>
+</html>
