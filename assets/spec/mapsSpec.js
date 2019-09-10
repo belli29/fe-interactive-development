@@ -1,8 +1,12 @@
 describe("user selection", function() {
   describe("country selection", function() {
     it("Map should be centered on Canada when user selects Canada", function() {
-      setMapCenterAndZoom('ca');
+      setMapCenterZoomRestrictions('ca');
       expect(MapCountryCenter).toBe(countries['ca'].center);
-      });
+    });
+    it("Autocomplete object should be restricted to Brazil results when user select Brazil", function() {
+      setMapCenterZoomRestrictions('br');
+      expect(countryRestrict["country"]).toBe('br');
     })
   })
+})
