@@ -53,6 +53,34 @@ function setMapCenterZoomRestrictions(country) {
   }
 };
 
+function addResult(result, i) {
+  var results = document.getElementById('results');
+  var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
+  var markerIcon = MARKER_PATH + markerLetter + '.png';
+  var tr = document.createElement('tr');
+  tr.style.backgroundColor = (i % 2 === 0 ? '#F0F0F0' : '#FFFFFF');
+  tr.onclick = function() {
+    google.maps.event.trigger(markers[i], 'click');
+  };
+  createTable(markerIcon, result, tr);
+};
+function createTable(markerIcon, result, tr){
+  var iconTd = document.createElement('td');
+  var nameTd = document.createElement('td');
+  var icon = document.createElement('img');
+  icon.src = markerIcon;
+  icon.setAttribute('class', 'placeIcon');
+  icon.setAttribute('className', 'placeIcon');
+  var name = document.createTextNode(result.name);
+  iconTd.appendChild(icon);
+  nameTd.appendChild(name);
+  tr.appendChild(iconTd);
+  tr.appendChild(nameTd);
+  results.appendChild(tr);
+};
+
+
+
 function initMap() {
 
   var map = new google.maps.Map(document.getElementById("map"), {
@@ -124,11 +152,14 @@ function initMap() {
           // in an info window.
           markers[i].placeResult = results[i];
           setTimeout(dropMarker(i), i * 100);
+          addResult(results[i], i);
 
         }
       }
     });
-  }
+  };
+
+
 
   function clearMarkers() {
     for (var i = 0; i < markers.length; i++) {
