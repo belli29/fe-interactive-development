@@ -11,9 +11,9 @@ describe("user selection", function() {
   })
   describe("search results", function(){
     it("results should be appended", function() {
-    spyOn("window", "createTable");
-    addResult(result, i);
-    expect(window.createTable(markerIcon,result,tr)).ToHaveBeenCalled();
+    spyOn(window, "createTable");
+    addResult();
+    expect(window.createTable).toHaveBeenCalled();
   })
   })
 })
