@@ -8,12 +8,12 @@ describe("user selection", function() {
       setMapCenterZoomRestrictions('br');
       expect(countryRestrict["country"]).toBe('br');
     })
-  })
-  describe("search results", function(){
+  });
+  describe("search results", function() {
     it("results should be appended", function() {
-    spyOn(window, "createTable");
-    addResult();
-    expect(window.createTable).toHaveBeenCalled();
+      spyOn(window, "createTable");
+      addResult();
+      expect(window.createTable).toHaveBeenCalled();
+    })
   })
-  })
-})
+});

@@ -1,6 +1,7 @@
 // global variables
 var map;
 var places;
+var infoWindow;
 var markers = [];
 var autocomplete;
 var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
@@ -52,6 +53,8 @@ function setMapCenterZoomRestrictions(country) {
     };
   }
 };
+// Search for hotels in the selected city, within the viewport of the map.
+
 
 function addResult(result, i) {
   var results = document.getElementById('results');
@@ -64,7 +67,8 @@ function addResult(result, i) {
   };
   createTable(markerIcon, result, tr);
 };
-function createTable(markerIcon, result, tr){
+
+function createTable(markerIcon, result, tr) {
   var iconTd = document.createElement('td');
   var nameTd = document.createElement('td');
   var icon = document.createElement('img');
@@ -79,11 +83,108 @@ function createTable(markerIcon, result, tr){
   results.appendChild(tr);
 };
 
+function buildIWContent(place) {
+  document.getElementById('iw-icon').innerHTML = '<img class="hotelIcon" ' +
+    'src="' + place.icon + '"/>';
+  document.getElementById('iw-url').innerHTML = '<b><a href="' + place.url +
+    '">' + place.name + '</a></b>';
+  document.getElementById('iw-address').textContent = place.vicinity;
+  if (place.formatted_phone_number) {
+    document.getElementById('iw-phone-row').style.display = '';
+    document.getElementById('iw-phone').textContent =
+      place.formatted_phone_number;
+  } else {
+    document.getElementById('iw-phone-row').style.display = 'none';
+  }
+  // Assign a five-star rating to the hotel, using a black star ('&#10029;')
+  // to indicate the rating the hotel has earned, and a white star ('&#10025;')
+  // for the rating points not achieved.
+  if (place.rating) {
+    var ratingHtml = '';
+    for (var i = 0; i < 5; i++) {
+      if (place.rating < (i + 0.5)) {
+        ratingHtml += '&#10025;';
+      } else {
+        ratingHtml += '&#10029;';
+      }
+      document.getElementById('iw-rating-row').style.display = '';
+      document.getElementById('iw-rating').innerHTML = ratingHtml;
+    }
+  } else {
+    document.getElementById('iw-rating-row').style.display = 'none';
+  }
+};
+// Get the place details for a hotel. Show the information in an info window,
+// anchored on the marker for the hotel that the user selected.
+function showInfoWindow() {
+  var marker = this;
+  places.getDetails({
+      placeId: marker.placeResult.place_id
+    },
+    function(place, status) {
+      if (status !== google.maps.places.PlacesServiceStatus.OK) {
+        return;
+      }
+      infoWindow.open(map, marker);
+      buildIWContent(place);
+    });
+};
 
+function clearMarkers() {
+  for (var i = 0; i < markers.length; i++) {
+    if (markers[i]) {
+      markers[i].setMap(null);
+    }
+  }
+  markers = [];
+};
+
+function clearResults() {
+  var results = document.getElementById('results');
+  while (results.childNodes[0]) {
+    results.removeChild(results.childNodes[0]);
+  }
+};
+
+function search() {
+  var search = {
+    bounds: map.getBounds(),
+    types: ['lodging']
+  };
+  places.nearbySearch(search, function(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      clearMarkers();
+      clearResults();
+      // Create a marker for each hotel found, and
+      // assign a letter of the alphabetic to each marker icon.
+      for (var i = 0; i < results.length; i++) {
+        var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
+        var markerIcon = MARKER_PATH + markerLetter + '.png';
+        // Use marker animation to drop the icons incrementally on the map.
+        markers[i] = new google.maps.Marker({
+          position: results[i].geometry.location,
+          animation: google.maps.Animation.DROP,
+          icon: markerIcon
+        });
+        // If the user clicks a hotel marker, show the details of that hotel
+        // in an info window.
+        google.maps.event.addListener(markers[i], 'click', showInfoWindow);
+        markers[i].placeResult = results[i];
+        setTimeout(dropMarker(i), i * 100);
+        addResult(results[i], i);
+      }
+    }
+  });
+};
+
+function dropMarker(i) {
+  return function() {
+    markers[i].setMap(map);
+  };
+};
 
 function initMap() {
-
-  var map = new google.maps.Map(document.getElementById("map"), {
+  map = new google.maps.Map(document.getElementById("map"), {
     zoom: 2,
     center: {
       lat: -34.397,
@@ -93,7 +194,6 @@ function initMap() {
     zoomControl: false,
     streetViewControl: false,
   });
-
   // Create the autocomplete object and associate it with the UI input control.
   // Restrict the search to the default country, and to place type "cities".
   autocomplete = new google.maps.places.Autocomplete(
@@ -102,13 +202,15 @@ function initMap() {
       componentRestrictions: countryRestrict
     });
   places = new google.maps.places.PlacesService(map);
-
+  infoWindow = new google.maps.InfoWindow({
+    content: document.getElementById('info-content')
+  });
   // Add a listener to react when the user changes country in autocomplete.
   autocomplete.addListener('place_changed', onPlaceChanged);
   // Add a DOM event listener to react when the user selects a country.
   document.getElementById('country').addEventListener(
     'change', setAutocompleteCountry);
-
+  
   // Set the country restriction based on user input and center-zoom on the country
   function setAutocompleteCountry() {
     setMapCenterZoomRestrictions(document.getElementById('country').value);
@@ -116,6 +218,7 @@ function initMap() {
     map.setZoom(MapCountryZoom);
     autocomplete.setComponentRestrictions(countryRestrict);
     clearMarkers();
+    clearResults();
   }
 
   function onPlaceChanged() {
@@ -128,52 +231,4 @@ function initMap() {
       document.getElementById('autocomplete').placeholder = 'Enter a city';
     }
   }
-  // Search for hotels in the selected city, within the viewport of the map.
-  function search() {
-    var search = {
-      bounds: map.getBounds(),
-      types: ['lodging']
-    };
-    places.nearbySearch(search, function(results, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        clearMarkers();
-        // Create a marker for each hotel found, and
-        // assign a letter of the alphabetic to each marker icon.
-        for (var i = 0; i < results.length; i++) {
-          var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
-          var markerIcon = MARKER_PATH + markerLetter + '.png';
-          // Use marker animation to drop the icons incrementally on the map.
-          markers[i] = new google.maps.Marker({
-            position: results[i].geometry.location,
-            animation: google.maps.Animation.DROP,
-            icon: markerIcon
-          });
-          // If the user clicks a hotel marker, show the details of that hotel
-          // in an info window.
-          markers[i].placeResult = results[i];
-          setTimeout(dropMarker(i), i * 100);
-          addResult(results[i], i);
-
-        }
-      }
-    });
-  };
-
-
-
-  function clearMarkers() {
-    for (var i = 0; i < markers.length; i++) {
-      if (markers[i]) {
-        markers[i].setMap(null);
-      }
-    }
-    markers = [];
-  }
-
-  function dropMarker(i) {
-    return function() {
-      markers[i].setMap(map);
-    };
-  }
-
-}
+};
