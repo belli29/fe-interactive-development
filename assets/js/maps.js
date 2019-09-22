@@ -151,10 +151,28 @@ function search() {
     bounds: map.getBounds(),
     types: ['lodging']
   };
+  var minRating;
   places.nearbySearch(search, function(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       clearMarkers();
       clearResults();
+      function filterFunc() {
+        filterResults = results.filter(function(result) {
+          return result.rating !== "indefined" && result.rating > minRating;
+        });
+        results = filterResults;
+      };
+      var filterResults;
+      if ($("#radio-good").prop("checked") == true){
+        minRating = 4;
+        filterFunc()
+      }else if ($("#radio-ok").prop("checked") == true) {
+        minRating = 3;
+        filterFunc()
+      }else if ($("#radio-bad").prop("checked") == true) {
+        minRating = 2;
+        filterFunc()
+      }
       // Create a marker for each hotel found, and
       // assign a letter of the alphabetic to each marker icon.
       for (var i = 0; i < results.length; i++) {
@@ -183,7 +201,9 @@ function dropMarker(i) {
   };
 };
 
+//Callback function that creates the map
 function initMap() {
+  $("#radio-all").prop("checked", true);
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 2,
     center: {
@@ -210,7 +230,12 @@ function initMap() {
   // Add a DOM event listener to react when the user selects a country.
   document.getElementById('country').addEventListener(
     'change', setAutocompleteCountry);
-  
+  // Add a DOM event listener to react when the user select a radio button.
+  document.getElementById('radio-good').addEventListener('change',search);
+  document.getElementById('radio-ok').addEventListener('change', search);
+  document.getElementById('radio-bad').addEventListener('change', search);
+  document.getElementById('radio-all').addEventListener('change', search);
+
   // Set the country restriction based on user input and center-zoom on the country
   function setAutocompleteCountry() {
     setMapCenterZoomRestrictions(document.getElementById('country').value);
