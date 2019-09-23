@@ -20,13 +20,14 @@ describe("user selection", function() {
 describe("filter results", function() {
   it("when user selects'Something nice'only results with min rating  3 are displayed on map ", function() {
     $("#radio-ok").prop("checked", true);
-    var filteredResults = [];
+    var testFilteredResults = [];
     function respectsMinTreshold(rating){
       return rating>3;
     };
     markers.forEach(function(marker, i) {
-      filteredResults[i] = marker.placeResult.rating;
+      testFilteredResults[i] = marker.placeResult.rating;
     });
-    expect(filteredResults.every(respectsMinTreshold)).toBe(true);
+    expect(testFilteredResults.every(respectsMinTreshold)).toBe(true);
+    $("#radio-all").prop("checked", true);
   });
 });

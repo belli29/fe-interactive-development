@@ -67,19 +67,47 @@ function addResult(result, i) {
   };
   createTable(markerIcon, result, tr);
 };
+function tableHeader(){
+var resultsHeading = document.getElementById('tHeading');
+var trHeading= document.createElement('tr');
+var iconTh= document.createElement('th');
+var nameTh= document.createElement('th');
+var addressTh= document.createElement('th');
+var ratingTh= document.createElement('th');
+var nameHead = document.createTextNode("Name");
+var addressHead = document.createTextNode("Address");
+var ratingHead = document.createTextNode("Rating");
+nameTh.appendChild(nameHead);
+addressTh.appendChild(addressHead);
+ratingTh.appendChild(ratingHead);
+trHeading.appendChild(iconTh);
+trHeading.appendChild(nameTh);
+trHeading.appendChild(addressTh);
+trHeading.appendChild(ratingTh);
+resultsHeading.appendChild(trHeading);
+};
 
 function createTable(markerIcon, result, tr) {
   var iconTd = document.createElement('td');
   var nameTd = document.createElement('td');
+  var addressTd= document.createElement('td');
+ var ratingTd= document.createElement('td');
   var icon = document.createElement('img');
   icon.src = markerIcon;
   icon.setAttribute('class', 'placeIcon');
   icon.setAttribute('className', 'placeIcon');
   var name = document.createTextNode(result.name);
+  var address = document.createTextNode(result.vicinity);
+  var rating = document.createTextNode(result.rating);
   iconTd.appendChild(icon);
   nameTd.appendChild(name);
+  addressTd.appendChild(address);
+  if (result.rating){
+    ratingTd.appendChild(rating)};
   tr.appendChild(iconTd);
   tr.appendChild(nameTd);
+  tr.appendChild(addressTd);
+  tr.appendChild(ratingTd);
   results.appendChild(tr);
 };
 
@@ -154,6 +182,9 @@ function search() {
   var minRating;
   places.nearbySearch(search, function(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
+      if (results!==[]){
+
+      }
       clearMarkers();
       clearResults();
       function filterFunc() {
@@ -247,10 +278,14 @@ function initMap() {
   }
 
   function onPlaceChanged() {
+    clearMarkers();
+    clearResults();
     var place = autocomplete.getPlace();
     if (place.geometry) {
       map.panTo(place.geometry.location);
       map.setZoom(15);
+      if ($("#tHeading").children()!==true){
+        tableHeader()};
       search();
     } else {
       document.getElementById('autocomplete').placeholder = 'Enter a city';
