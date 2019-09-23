@@ -284,7 +284,7 @@ function initMap() {
     if (place.geometry) {
       map.panTo(place.geometry.location);
       map.setZoom(15);
-      if ($("#tHeading").children()!==true){
+      if ($("#tHeading").children().length===0){
         tableHeader()};
       search();
     } else {
