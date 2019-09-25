@@ -3,6 +3,7 @@ var map;
 var places;
 var infoWindow;
 var markers = [];
+var resultsHeading;
 var autocomplete;
 var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
 var countryRestrict = {
@@ -66,32 +67,38 @@ function addResult(result, i) {
     google.maps.event.trigger(markers[i], 'click');
   };
   createTable(markerIcon, result, tr);
+
 };
-function tableHeader(){
-var resultsHeading = document.getElementById('tHeading');
-var trHeading= document.createElement('tr');
-var iconTh= document.createElement('th');
-var nameTh= document.createElement('th');
-var addressTh= document.createElement('th');
-var ratingTh= document.createElement('th');
-var nameHead = document.createTextNode("Name");
-var addressHead = document.createTextNode("Address");
-var ratingHead = document.createTextNode("Rating");
-nameTh.appendChild(nameHead);
-addressTh.appendChild(addressHead);
-ratingTh.appendChild(ratingHead);
-trHeading.appendChild(iconTh);
-trHeading.appendChild(nameTh);
-trHeading.appendChild(addressTh);
-trHeading.appendChild(ratingTh);
-resultsHeading.appendChild(trHeading);
+
+function tableHeader() {
+
+  resultsHeading = document.getElementById('tHeading');
+  var trHeading = document.createElement('tr');
+  var iconTh = document.createElement('th');
+  var nameTh = document.createElement('th');
+  var addressTh = document.createElement('th');
+  var ratingTh = document.createElement('th');
+  var nameHead = document.createTextNode("Name");
+  var addressHead = document.createTextNode("Address");
+  var ratingHead = document.createTextNode("Rating");
+  nameTh.appendChild(nameHead);
+  addressTh.appendChild(addressHead);
+  ratingTh.appendChild(ratingHead);
+  trHeading.appendChild(iconTh);
+  trHeading.appendChild(nameTh);
+  trHeading.appendChild(addressTh);
+  trHeading.appendChild(ratingTh);
+  resultsHeading.appendChild(trHeading);
 };
 
 function createTable(markerIcon, result, tr) {
+  if ($("#tHeading").children().length === 0) {
+    tableHeader();
+  };
   var iconTd = document.createElement('td');
   var nameTd = document.createElement('td');
-  var addressTd= document.createElement('td');
- var ratingTd= document.createElement('td');
+  var addressTd = document.createElement('td');
+  var ratingTd = document.createElement('td');
   var icon = document.createElement('img');
   icon.src = markerIcon;
   icon.setAttribute('class', 'placeIcon');
@@ -102,8 +109,9 @@ function createTable(markerIcon, result, tr) {
   iconTd.appendChild(icon);
   nameTd.appendChild(name);
   addressTd.appendChild(address);
-  if (result.rating){
-    ratingTd.appendChild(rating)};
+  if (result.rating) {
+    ratingTd.appendChild(rating)
+  };
   tr.appendChild(iconTd);
   tr.appendChild(nameTd);
   tr.appendChild(addressTd);
@@ -181,12 +189,10 @@ function search() {
   };
   var minRating;
   places.nearbySearch(search, function(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      if (results!==[]){
-
-      }
+    if (status === google.maps.places.PlacesServiceStatus.OK && $("#autocomplete").val() !== "") {
       clearMarkers();
       clearResults();
+
       function filterFunc() {
         filterResults = results.filter(function(result) {
           return result.rating !== "indefined" && result.rating > minRating;
@@ -194,13 +200,13 @@ function search() {
         results = filterResults;
       };
       var filterResults;
-      if ($("#radio-good").prop("checked") == true){
+      if ($("#radio-good").prop("checked") == true) {
         minRating = 4;
         filterFunc()
-      }else if ($("#radio-ok").prop("checked") == true) {
+      } else if ($("#radio-ok").prop("checked") == true) {
         minRating = 3;
         filterFunc()
-      }else if ($("#radio-bad").prop("checked") == true) {
+      } else if ($("#radio-bad").prop("checked") == true) {
         minRating = 2;
         filterFunc()
       }
@@ -262,10 +268,10 @@ function initMap() {
   document.getElementById('country').addEventListener(
     'change', setAutocompleteCountry);
   // Add a DOM event listener to react when the user select a radio button.
-  document.getElementById('radio-good').addEventListener('change',search);
-  document.getElementById('radio-ok').addEventListener('change', search);
-  document.getElementById('radio-bad').addEventListener('change', search);
-  document.getElementById('radio-all').addEventListener('change', search);
+  document.getElementById('radio-good').addEventListener('change', onPlaceChanged);
+  document.getElementById('radio-ok').addEventListener('change', onPlaceChanged);
+  document.getElementById('radio-bad').addEventListener('change', onPlaceChanged);
+  document.getElementById('radio-all').addEventListener('change', onPlaceChanged);
 
   // Set the country restriction based on user input and center-zoom on the country
   function setAutocompleteCountry() {
@@ -284,8 +290,6 @@ function initMap() {
     if (place.geometry) {
       map.panTo(place.geometry.location);
       map.setZoom(15);
-      if ($("#tHeading").children().length===0){
-        tableHeader()};
       search();
     } else {
       document.getElementById('autocomplete').placeholder = 'Enter a city';
