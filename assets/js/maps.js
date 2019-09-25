@@ -3,7 +3,6 @@ var map;
 var places;
 var infoWindow;
 var markers = [];
-var resultsHeading;
 var autocomplete;
 var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
 var countryRestrict = {
@@ -176,10 +175,8 @@ function clearMarkers() {
 };
 
 function clearResults() {
-  var results = document.getElementById('results');
-  while (results.childNodes[0]) {
-    results.removeChild(results.childNodes[0]);
-  }
+  $("#tHeading").empty();
+  $("#results").empty();
 };
 
 function search() {
