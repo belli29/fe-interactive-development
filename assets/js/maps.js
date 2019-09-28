@@ -8,6 +8,7 @@ var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/i
 var countryRestrict = {
   'country': 'us'
 };
+var hostnameRegexp = new RegExp('^https?://.+?/');
 var countries = {
   'au': {
     center: {
@@ -147,7 +148,21 @@ function buildIWContent(place) {
     }
   } else {
     document.getElementById('iw-rating-row').style.display = 'none';
-  }
+  };
+
+  if (place.website) {
+          var fullUrl = place.website;
+          var website = hostnameRegexp.exec(place.website);
+          if (website === null) {
+            website = 'http://' + place.website + '/';
+            fullUrl = website;
+          }
+          document.getElementById('iw-website-row').style.display = '';
+          document.getElementById('iw-website').innerHTML = `<a href="${website}" target="_blank">${website}</a>`;
+        } else {
+          document.getElementById('iw-website-row').style.display = 'none';
+        }
+
 };
 // Get the place details for a hotel. Show the information in an info window,
 // anchored on the marker for the hotel that the user selected.
