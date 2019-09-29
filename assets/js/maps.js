@@ -62,7 +62,7 @@ function addResult(result, i) {
   var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
   var markerIcon = MARKER_PATH + markerLetter + '.png';
   var tr = document.createElement('tr');
-  tr.style.backgroundColor = (i % 2 === 0 ? '#F0F0F0' : '#FFFFFF');
+  tr.style.backgroundColor = (i % 2 === 0 ? '#007EA7' : '#00A7E1');
   tr.onclick = function() {
     google.maps.event.trigger(markers[i], 'click');
   };
@@ -293,7 +293,7 @@ function initMap() {
     autocomplete.setComponentRestrictions(countryRestrict);
     clearMarkers();
     clearResults();
-  }
+  };
 
   function onPlaceChanged() {
     clearMarkers();

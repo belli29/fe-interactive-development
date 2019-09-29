@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css?family=Big+Shoulders+Text:400,800');
+
+body {
+  background-color: #00A7E1;
+  font-family: 'Big Shoulders Text', cursive;
+}
+header{
+  background-color: #003459;
+}
+h4, span {
+  display: inline;
+}
+
+.search-box {
+  background-color: #007EA7;
+}
+
+.input-box {
+  border-radius: 10px;
+  background-color: #A5C7FF;
+  border-color: #13B228;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.input-box:focus {
+  outline: none;
+}
+
+h4 {
+  color: #FFFFFF
+}
+
+footer {
+  background-color: #003459;
+  color: #00A7E1;
+  height: 30px;
+}
+
+#map {
+  min-height: 360px;
+}
+
+/*@media*/
+@media only screen and (min-width: 768px) {
+  #map {
+    height: 500px;
+  }
+}
+@media only screen and (min-height: 600px) {
+  #map {
+    height: 690px;
+  }
+}
+@media only screen and (min-height: 900px) {
+  #map {
+    height: 790px;
+  }
+}
+@media only screen and (min-height: 950px) {
+  #map {
+    height: 840px;
+  }
+}
+
+@media only screen and (min-height: 1020px) {
+  #map {
+    height: 910px;
+  }
+}
+
+@media only screen and (min-height: 1360px) {
+  #map {
+    height: 1250px;
+  }
+}
