@@ -3,22 +3,25 @@
 body {
   background-color: #00A7E1;
   font-family: 'Big Shoulders Text', cursive;
+  /*color: #D8FFDD*/
 }
 header{
   background-color: #003459;
 }
 h4, span {
   display: inline;
+  color: #C8FFC1
 }
 
 .search-box {
   background-color: #007EA7;
+  color: #C8FFC1
 }
 
 .input-box {
   border-radius: 10px;
   background-color: #A5C7FF;
-  border-color: #13B228;
+  border-color: #C8FFC1;
   border-style: solid;
   border-width: 2px;
 }
@@ -28,7 +31,7 @@ h4, span {
 }
 
 h4 {
-  color: #FFFFFF
+  color: #C8FFC1
 }
 
 footer {
