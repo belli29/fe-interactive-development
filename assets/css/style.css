@@ -43,6 +43,13 @@ footer {
 #map {
   min-height: 360px;
 }
+/*radio buttons customization*/
+.custom-radio .custom-control-label::before {
+    background-color: #C8FFC1;
+  }
+.custom-radio .custom-control-input:checked~.custom-control-label::before {
+      background-color: #003459;
+    }
 
 /*@media*/
 @media only screen and (min-width: 768px) {
