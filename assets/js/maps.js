@@ -10,7 +10,6 @@ var countryRestrict = {
 };
 var hostnameRegexp = new RegExp('^https?://.+?/');
 var countries = {
-  {
  'au': {
   center: { lat: -25.3, lng: 133.8 },
   zoom: 4
