@@ -101,26 +101,9 @@ function addResult(result, i) {
   createTable(markerIcon, result, tr);
 
 };
-
+// Creating the table
 function tableHeader() {
-
-  resultsHeading = document.getElementById('tHeading');
-  var trHeading = document.createElement('tr');
-  var iconTh = document.createElement('th');
-  var nameTh = document.createElement('th');
-  var addressTh = document.createElement('th');
-  var ratingTh = document.createElement('th');
-  var nameHead = document.createTextNode("Name");
-  var addressHead = document.createTextNode("Address");
-  var ratingHead = document.createTextNode("Rating");
-  nameTh.appendChild(nameHead);
-  addressTh.appendChild(addressHead);
-  ratingTh.appendChild(ratingHead);
-  trHeading.appendChild(iconTh);
-  trHeading.appendChild(nameTh);
-  trHeading.appendChild(addressTh);
-  trHeading.appendChild(ratingTh);
-  resultsHeading.appendChild(trHeading);
+  $("#tHeading").html("<tr><th></th><th>Name</th><th>Address</th><th>Rating</th></tr>");
 };
 
 function createTable(markerIcon, result, tr) {
