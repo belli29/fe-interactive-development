@@ -3,20 +3,32 @@
 body {
   background-color: #00A7E1;
   font-family: 'Big Shoulders Text', cursive;
-  /*color: #D8FFDD*/
 }
 header{
   background-color: #003459;
+  height: 50px
 }
-h4, span {
+h2, span {
   display: inline;
-  color: #C8FFC1
+  color: #C8FFC1;
+  line-height: unset
+
 }
 
 form{
   border-color:!important#C8FFC1;
 }
 
+/*table*/
+.table thead th{
+  border-top: none;
+  color:#003459;
+  border-color: #C8FFC1
+}
+.table td {
+  color:  #C8FFC1;
+  border-color: #C8FFC1
+}
 .search-box {
   background-color: #007EA7;
   color: #C8FFC1
