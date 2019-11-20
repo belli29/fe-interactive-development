@@ -10,58 +10,97 @@ var countryRestrict = {
 };
 var hostnameRegexp = new RegExp('^https?://.+?/');
 var countries = {
- 'au': {
-  center: { lat: -25.3, lng: 133.8 },
-  zoom: 4
- },
- 'br': {
-  center: { lat: -14.2, lng: -51.9 },
-  zoom: 3
- },
- 'ca': {
-  center: { lat: 62, lng: -110.0 },
-  zoom: 3
- },
- 'fr': {
-  center: { lat: 46.2, lng: 2.2 },
-  zoom: 5
- },
- 'de': {
-  center: { lat: 51.2, lng: 10.4 },
-  zoom: 5
- },
- 'mx': {
-  center: { lat: 23.6, lng: -102.5 },
-  zoom: 4
- },
- 'nz': {
-  center: { lat: -40.9, lng: 174.9 },
-  zoom: 5
- },
- 'it': {
-  center: { lat: 41.9, lng: 12.6 },
-  zoom: 5
- },
- 'za': {
-  center: { lat: -30.6, lng: 22.9 },
-  zoom: 5
- },
- 'es': {
-  center: { lat: 40.5, lng: -3.7 },
-  zoom: 5
- },
- 'pt': {
-  center: { lat: 39.4, lng: -8.2 },
-  zoom: 6
- },
- 'us': {
-  center: { lat: 37.1, lng: -95.7 },
-  zoom: 3
- },
- 'uk': {
-  center: { lat: 54.8, lng: -4.6 },
-  zoom: 5
- }
+  'au': {
+    center: {
+      lat: -25.3,
+      lng: 133.8
+    },
+    zoom: 4
+  },
+  'br': {
+    center: {
+      lat: -14.2,
+      lng: -51.9
+    },
+    zoom: 3
+  },
+  'ca': {
+    center: {
+      lat: 62,
+      lng: -110.0
+    },
+    zoom: 3
+  },
+  'fr': {
+    center: {
+      lat: 46.2,
+      lng: 2.2
+    },
+    zoom: 5
+  },
+  'de': {
+    center: {
+      lat: 51.2,
+      lng: 10.4
+    },
+    zoom: 5
+  },
+  'mx': {
+    center: {
+      lat: 23.6,
+      lng: -102.5
+    },
+    zoom: 4
+  },
+  'nz': {
+    center: {
+      lat: -40.9,
+      lng: 174.9
+    },
+    zoom: 5
+  },
+  'it': {
+    center: {
+      lat: 41.9,
+      lng: 12.6
+    },
+    zoom: 5
+  },
+  'za': {
+    center: {
+      lat: -30.6,
+      lng: 22.9
+    },
+    zoom: 5
+  },
+  'es': {
+    center: {
+      lat: 40.5,
+      lng: -3.7
+    },
+    zoom: 5
+  },
+  'pt': {
+    center: {
+      lat: 39.4,
+      lng: -8.2
+    },
+    zoom: 6
+  },
+  'us': {
+    center: {
+      lat: 37.1,
+      lng: -95.7
+    },
+    zoom: 3
+  },
+  'uk': {
+    center: {
+      lat: 54.8,
+      lng: -4.6
+    },
+    zoom: 5
+  }
 };
 
 
@@ -90,7 +129,7 @@ function setMapCenterZoomRestrictions(country) {
 
 
 function addResult(result, i) {
-  var results = document.getElementById('results');
+
   var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
   var markerIcon = MARKER_PATH + markerLetter + '.png';
   var tr = document.createElement('tr');
@@ -116,22 +155,13 @@ function createTable(markerIcon, result, tr) {
   var ratingTd = document.createElement('td');
   var icon = document.createElement('img');
   icon.src = markerIcon;
-  icon.setAttribute('class', 'placeIcon');
-  icon.setAttribute('className', 'placeIcon');
-  var name = document.createTextNode(result.name);
-  var address = document.createTextNode(result.vicinity);
-  var rating = result.rating? document.createTextNode(result.rating.toFixed(1)): null;
-  iconTd.appendChild(icon);
-  nameTd.appendChild(name);
-  addressTd.appendChild(address);
-  if (result.rating) {
-    ratingTd.appendChild(rating)
-  };
-  tr.appendChild(iconTd);
-  tr.appendChild(nameTd);
-  tr.appendChild(addressTd);
-  tr.appendChild(ratingTd);
-  results.appendChild(tr);
+  $(icon).attr('class', 'placeIcon').attr('className', 'placeIcon');
+  $(iconTd).html(icon);
+  $(nameTd).html(result.name);
+  $(addressTd).html(result.vicinity);
+  result.rating ? $(ratingTd).html(result.rating.toFixed(1)) : null;
+  tr.append(iconTd, nameTd, addressTd, ratingTd);
+  $("#results").append(tr);
 };
 
 function buildIWContent(place) {
@@ -166,17 +196,17 @@ function buildIWContent(place) {
   };
 
   if (place.website) {
-          var fullUrl = place.website;
-          var website = hostnameRegexp.exec(place.website);
-          if (website === null) {
-            website = 'http://' + place.website + '/';
-            fullUrl = website;
-          }
-          document.getElementById('iw-website-row').style.display = '';
-          document.getElementById('iw-website').innerHTML = `<a href="${website}" target="_blank">${website}</a>`;
-        } else {
-          document.getElementById('iw-website-row').style.display = 'none';
-        }
+    var fullUrl = place.website;
+    var website = hostnameRegexp.exec(place.website);
+    if (website === null) {
+      website = 'http://' + place.website + '/';
+      fullUrl = website;
+    }
+    document.getElementById('iw-website-row').style.display = '';
+    document.getElementById('iw-website').innerHTML = `<a href="${website}" target="_blank">${website}</a>`;
+  } else {
+    document.getElementById('iw-website-row').style.display = 'none';
+  }
 
 };
 // Get the place details for a hotel. Show the information in an info window,
