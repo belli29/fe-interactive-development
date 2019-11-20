@@ -120,7 +120,7 @@ function createTable(markerIcon, result, tr) {
   icon.setAttribute('className', 'placeIcon');
   var name = document.createTextNode(result.name);
   var address = document.createTextNode(result.vicinity);
-  var rating = document.createTextNode(result.rating.toFixed(1));
+  var rating = result.rating? document.createTextNode(result.rating.toFixed(1)): null;
   iconTd.appendChild(icon);
   nameTd.appendChild(name);
   addressTd.appendChild(address);
