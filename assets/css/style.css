@@ -20,6 +20,11 @@ form {
   border-color:  !important#C8FFC1;
 }
 
+#country {
+  padding-top: 1px;
+  padding-bottom: 1px
+}
+
 /*table*/
 .table thead th {
   border-top: none;
@@ -60,7 +65,7 @@ footer {
 }
 
 #map {
-  min-height: 360px;
+  min-height: 300px;
 }
 
 /*radio buttons customization*/
@@ -73,10 +78,9 @@ footer {
 }
 
 /*@media*/
-@media only screen and (min-height: 600px) {
-  #map {
-    height: 500px;
-  }
+#map {
+  height: 500px;
+}
 }
 
 @media only screen and (min-height: 900px) {
