@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Big+Shoulders+Text:400,800');
-
 body {
   background-color: #00A7E1;
   font-family: 'Big Shoulders Text', cursive;
@@ -78,10 +77,12 @@ footer {
 }
 
 /*@media*/
-#map {
-  height: 500px;
+@media only screen and (min-height: 600px) {
+  #map {
+    height: 500px;
+  }
 }
-}
+
 
 @media only screen and (min-height: 900px) {
   #map {
@@ -111,5 +112,25 @@ footer {
   form {
     border-style: solid;
     border-radius: .25rem
+  }
+}
+/*@media Big desktop screen*/
+@media only screen and (min-width: 2500px) {
+  h2{
+    margin-bottom: 5rem
+  }
+
+  h3{
+    font-size: 3rem
+  }
+
+  #row-search{
+    margin-left: 20rem;
+    margin-right: 20rem;
+    font-size:xx-large
+  }
+  #radio-box{
+    font-size: xx-large;
+    margin-top: 5rem;
   }
 }

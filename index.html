@@ -24,7 +24,7 @@
 </head>
 
 <body>
-
+<div id="test">
   <header class="container-fluid">
     <div class="row">
       <div class="col-md-12 text-center">
@@ -43,11 +43,11 @@
           <div class="col-12">
             <h2 class="display-4 text-center d-none d-md-block mt-4">Where do you want to go?</h2>
           </div>
-          <div class="row mt-4 justify-content-center">
+          <div class="row mt-4 justify-content-center" id="row-search">
             <div class="col-4 col-md-3">
               <h3>Country:</h3>
             </div>
-            <div class="col-6 col-md-3 ml-sm-2">
+            <div class="col-6 col-md-3 ml-sm-2 text-right">
               <select id="country" class="input-box">
                 <option value="all" selected>All</option>
                 <option value="au">Australia</option>
@@ -66,16 +66,16 @@
               </select>
             </div>
           </div>
-          <div class="row mt-4 justify-content-center" >
-            <div class="col-4 col-md-3">
+          <div class="row mt-4 justify-content-center" id="row-search" >
+            <div class="col-4 col-md-3 ">
               <h3>City:</h3>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-md-3 text-right">
               <input id="autocomplete" class="input-box" placeholder="Enter a city" type="text" />
             </div>
           </div>
           <div class="row mt-5">
-            <div class="col-xs-12 mx-md-auto custom-control custom-radio ">
+            <div class=" mx-md-auto custom-control custom-radio" id="radio-box">
               <form action=" " class="p-2">
                 <div class="custom-control custom-radio"><input type="radio" name="radio" value="all" id="radio-all" class="custom-control-input"> <label for="radio-all" class="custom-control-label">Give me all the options.</label><br></div>
                 <div class="custom-control custom-radio"><input type="radio" name="radio" value="good" id="radio-good" class="custom-control-input"> <label for="radio-good" class="custom-control-label">I want something really good!</label><br></div>
@@ -136,7 +136,7 @@
       </div>
     </div>
   </section>
-
+</div>
   <footer>
     <div class="container-fluid">
       <div class="footer-copyright text-center">© 2019 Stefano Belli
