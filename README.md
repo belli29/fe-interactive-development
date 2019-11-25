@@ -23,8 +23,9 @@ The project is based on Google Maps API which is called at the bottom of the Ind
 
 The API is used by the callback function initMap() in my [attachd Javascript file](https://github.com/belli29/fe-interactive-development/blob/master/assets/js/maps.js).
 
-The main technology used is Javascript. I also used Jquery, when possible, in order to simplify the sintax of my code.
+The main technology used is the project is clearly Javascript. I also used Jquery, when possible, in order to simplify the sintax of my code.
 
+I also have made use of Bootstrap 4  classes and this allowed me to achieve my result writing less code.
 
 The website is fully responsive and thought to "look good" on different devices. 
 
@@ -38,14 +39,12 @@ In particular the following devices were tested:
 * Laptop with MDPI screen
 * Apple Imac 21.5"
 
-I have made use of Bootstrap 4 and this allowed me to achieve my result writing less code.
-
 
 ## Testing
 
 Automatic testing has being carried out through Jasmine ([see file](https://github.com/belli29/fe-interactive-development/tree/master/assets/spec)).
 
-Unfortunately I was not really able to carry out all the tests I wanted thorugh Jasmine. Most of the tests were carried out manually.
+Unfortunately I was not really able to carry out all the tests I wanted through Jasmine. Most of the tests were carried out manually.
 
 Down below a table with some of the tests:
 
