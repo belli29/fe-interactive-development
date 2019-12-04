@@ -116,7 +116,7 @@ function setMapCenterZoomRestrictions(country) {
     MapCountryZoom = 2;
     countryRestrict = {
       'country': []
-    }
+    };
   } else {
     MapCountryCenter = countries[country].center;
     MapCountryZoom = countries[country].zoom;
@@ -124,7 +124,7 @@ function setMapCenterZoomRestrictions(country) {
       'country': country
     };
   }
-};
+}
 // Search for hotels in the selected city, within the viewport of the map.
 
 
@@ -139,16 +139,16 @@ function addResult(result, i) {
   };
   createTable(markerIcon, result, tr);
 
-};
+}
 // Creating the table
 function tableHeader() {
   $("#tHeading").html("<tr><th></th><th>Name</th><th>Address</th><th>Rating</th></tr>");
-};
+}
 
 function createTable(markerIcon, result, tr) {
   if ($("#tHeading").children().length === 0) {
     tableHeader();
-  };
+  }
   var iconTd = document.createElement('td');
   var nameTd = document.createElement('td');
   var addressTd = document.createElement('td');
@@ -162,7 +162,7 @@ function createTable(markerIcon, result, tr) {
   result.rating ? $(ratingTd).html(result.rating.toFixed(1)) : null;
   tr.append(iconTd, nameTd, addressTd, ratingTd);
   $("#results").append(tr);
-};
+}
 
 function buildIWContent(place) {
   document.getElementById('iw-icon').innerHTML = '<img class="hotelIcon" ' +
@@ -193,7 +193,7 @@ function buildIWContent(place) {
     }
   } else {
     document.getElementById('iw-rating-row').style.display = 'none';
-  };
+  }
 
   if (place.website) {
     var fullUrl = place.website;
@@ -208,7 +208,7 @@ function buildIWContent(place) {
     document.getElementById('iw-website-row').style.display = 'none';
   }
 
-};
+}
 // Get the place details for a hotel. Show the information in an info window,
 // anchored on the marker for the hotel that the user selected.
 function showInfoWindow() {
@@ -223,7 +223,7 @@ function showInfoWindow() {
       infoWindow.open(map, marker);
       buildIWContent(place);
     });
-};
+}
 
 function clearMarkers() {
   for (var i = 0; i < markers.length; i++) {
@@ -232,12 +232,12 @@ function clearMarkers() {
     }
   }
   markers = [];
-};
+}
 
 function clearResults() {
   $("#tHeading").empty();
   $("#results").empty();
-};
+}
 
 function search() {
   var search = {
@@ -255,17 +255,17 @@ function search() {
           return result.rating !== "indefined" && result.rating > minRating;
         });
         results = filterResults;
-      };
+      }
       var filterResults;
       if ($("#radio-good").prop("checked") == true) {
         minRating = 4;
-        filterFunc()
+        filterFunc();
       } else if ($("#radio-ok").prop("checked") == true) {
         minRating = 3;
-        filterFunc()
+        filterFunc();
       } else if ($("#radio-bad").prop("checked") == true) {
         minRating = 2;
-        filterFunc()
+        filterFunc();
       }
       // Create a marker for each hotel found, and
       // assign a letter of the alphabetic to each marker icon.
@@ -287,13 +287,13 @@ function search() {
       }
     }
   });
-};
+}
 
 function dropMarker(i) {
   return function() {
     markers[i].setMap(map);
   };
-};
+}
 
 //Callback function that creates the map
 function initMap() {
@@ -338,7 +338,7 @@ function initMap() {
     autocomplete.setComponentRestrictions(countryRestrict);
     clearMarkers();
     clearResults();
-  };
+  }
 
   function onPlaceChanged() {
     clearMarkers();
@@ -352,4 +352,4 @@ function initMap() {
       document.getElementById('autocomplete').placeholder = 'Enter a city';
     }
   }
-};
+}
