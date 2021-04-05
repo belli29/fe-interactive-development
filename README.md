@@ -1,6 +1,6 @@
 # Hotel Searching Tool
 
-[Click here to view the website]( https://belli29.github.io/fe-interactive-development/)
+[Click here to view the website]( https://belli29.github.io/hotel-searching-tool/)
 
 
 ## Tutorial
